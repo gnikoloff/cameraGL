@@ -1,4 +1,4 @@
-import TweenMax from 'gsap'
+import getUserMedia from 'getusermedia'
 import Events from 'backbone-events-standalone'
 
 navigator.getUserMedia = navigator.getUserMedia ||

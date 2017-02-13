@@ -1,4 +1,4 @@
-* { margin: 0; padding: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 canvas { display: block; }
 body { overflow: hidden; background: #111; color: #fff; font-family: “Century Gothic”, CenturyGothic, AppleGothic, sans-serif; }
 header {

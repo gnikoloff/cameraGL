@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "backbone-events-standalone": "^0.2.7",
+    "getusermedia": "^2.0.1",
     "gsap": "^1.19.1",
     "three": "^0.84.0"
   }
