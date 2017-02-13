@@ -30,6 +30,12 @@ const setScene = () => {
     })
 }
 
+const onResize = () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
 const renderFrame = (ts) => {
     window.requestAnimationFrame(renderFrame)
     renderer.render(scene, camera)
@@ -42,6 +48,8 @@ const renderFrame = (ts) => {
 const init = () => {
     setScene()
     renderFrame()
+
+    window.onresize = onResize
 }
 
 export default {
