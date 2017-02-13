@@ -51466,7 +51466,7 @@ var closeVideo = function closeVideo(e) {
 
     if (singleOpen === true) {
         _gsap2.default.to(intersected.position, 0.25, {
-            x: x, y: y, z: z
+            x: x, y: y, z: z, ease: Power3.easeIn
         });
         _gsap2.default.to('#close-video', 0.25, {
             y: '-150px'

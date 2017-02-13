@@ -52,7 +52,7 @@ const closeVideo = (e) => {
     let { x, y, z } = lastPos
     if (singleOpen === true) {
         TweenMax.to(intersected.position, 0.25, {
-            x, y, z
+            x, y, z, ease: Power3.easeIn
         })
         TweenMax.to('#close-video', 0.25, {
             y: '-150px'

@@ -21,7 +21,7 @@ a { color: #fff; }
     border: none;
     cursor: pointer;
     background-color: #222;
-    background-image: url('close-btn.png');
+    background-image: url('images/close-btn.png');
     background-repeat: no-repeat;
     background-position: 50% 50%;
 
@@ -43,7 +43,7 @@ a { color: #fff; }
     top: 50%;
     left: 50%;
     margin: -25px 0 0 -25px;
-    background-image: url('page-loader.png');
+    background-image: url('images/page-loader.png');
     background-repeat:  no-repeat;
     background-position: 50% 50%;
 
