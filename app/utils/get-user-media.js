@@ -12,5 +12,5 @@ if (navigator.getUserMedia) {
         };
     });
 } else {
-    console.log("getUserMedia not supported");
+    document.querySelector('#unsupport').style.display = 'none'
 }     
