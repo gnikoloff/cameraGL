@@ -4,14 +4,26 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>CameraGL</title>
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <meta property="og:url" content="http://gnikoloff.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Georgi Nikoloff" />
+        <meta property="og:description" content="Georgi Nikoloff Personal Website'" />
+        <meta property="og:image" content="http://gnikoloff.com/public/images/georgi-facebook.png" />
+        <meta property="og:site_name" content="Georgi Nikoloff Personal Website">
+
+        <meta name="twitter:card" content="photo">
+        <meta name="twitter:site" content="@georgiNikoloff">
+        <meta name="twitter:title" content="Georgi Nikoloff Website">
+        <meta name="twitter:image" content="http://gnikoloff.com/public/images/georgi-twitter.png">
+        <meta name="twitter:url" content="http://gnikoloff.com">
+        
         <style>
             * { margin: 0; padding: 0; }
             canvas { display: block; }
-            #video { display: none; }
             body { overflow: hidden; background: #111; color: #fff; font-family: “Century Gothic”, CenturyGothic, AppleGothic, sans-serif; }
             header {
                 display: flex;
@@ -21,12 +33,30 @@
                 padding: 0 12px;
             }
             a { color: #fff; }
+            #close-video {
+                position: fixed;
+                top: 62px;
+                left: 50%;
+                margin-left: -36px;
+                width: 62px;
+                height: 62px;
+                border: none;
+                cursor: pointer;
+                background-color: #222;
+                background-image: url('public/close-btn.png');
+                background-repeat: no-repeat;
+                background-position: 50% 50%;
+
+                transform: translate3d(0, -150px, 0);
+            }
+            #video { display: none; }
         </style>
 
     </head>
     <body>
 
         <div id="app-container">
+            <button id="close-video"></button>
             <video id="video"></video>
             <div id="canvas-container"></div>
             <header>

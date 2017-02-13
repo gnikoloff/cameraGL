@@ -63,11 +63,293 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _planeContainer = __webpack_require__(2);
+
+var _planeContainer2 = _interopRequireDefault(_planeContainer);
+
+var _cameraTexture = __webpack_require__(1);
+
+var _cameraTexture2 = _interopRequireDefault(_cameraTexture);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var THREE = __webpack_require__(4);
+
+
+var width = window.innerWidth;
+var height = window.innerHeight - 72;
+
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+var renderer = new THREE.WebGLRenderer();
+
+var texture = new _cameraTexture2.default();
+_planeContainer2.default.init(scene, camera, width / 12, height / 12, texture);
+
+var setScene = function setScene() {
+    camera.position.set(0, 0, 92);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    renderer.setSize(width, height);
+    renderer.setClearColor(0x111111);
+    document.body.querySelector('#canvas-container').appendChild(renderer.domElement);
+};
+
+var renderFrame = function renderFrame(ts) {
+    window.requestAnimationFrame(renderFrame);
+    renderer.render(scene, camera);
+    texture.render();
+    camera.lookAt(scene.position);
+    camera.updateMatrixWorld();
+    _planeContainer2.default.updateFrame(ts);
+};
+
+var init = function init() {
+    setScene();
+    renderFrame();
+};
+
+exports.default = {
+    init: init
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+__webpack_require__(3);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Texture = function () {
+    function Texture() {
+        _classCallCheck(this, Texture);
+
+        this.canvas = document.createElement('canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.width = this.canvas.width = 512;
+        this.height = this.canvas.height = 256;
+        this.src = document.querySelector('#video');
+
+        //document.body.appendChild(this.canvas)
+    }
+
+    _createClass(Texture, [{
+        key: 'render',
+        value: function render() {
+            this.ctx.save();
+            this.ctx.drawImage(this.src, 0, 0, this.width, this.height);
+            var imageData = this.ctx.getImageData(0, 0, this.width, this.height);
+            for (var i = 0; i < imageData.data.length; i += 4) {
+                //let r = imageData.data[i]
+                //let g = imageData.data[i + 1]
+                //let b = imageData.data[i + 2]
+                //let brightness = (3*r+4*g+b)>>>3
+                //imageData.data[i]     = brightness
+                //imageData.data[i + 1] = brightness
+                //imageData.data[i + 2] = brightness
+            }
+            this.ctx.putImageData(imageData, 0, 0);
+            this.ctx.restore();
+        }
+    }]);
+
+    return Texture;
+}();
+
+exports.default = Texture;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _plane = __webpack_require__(6);
+
+var _plane2 = _interopRequireDefault(_plane);
+
+var _gsap = __webpack_require__(16);
+
+var _gsap2 = _interopRequireDefault(_gsap);
+
+var _planeShaders = __webpack_require__(7);
+
+var _planeShaders2 = _interopRequireDefault(_planeShaders);
+
+var _planeShaders3 = __webpack_require__(8);
+
+var _planeShaders4 = _interopRequireDefault(_planeShaders3);
+
+var _planeShaders5 = __webpack_require__(9);
+
+var _planeShaders6 = _interopRequireDefault(_planeShaders5);
+
+var _planeShaders7 = __webpack_require__(10);
+
+var _planeShaders8 = _interopRequireDefault(_planeShaders7);
+
+var _planeShaders9 = __webpack_require__(11);
+
+var _planeShaders10 = _interopRequireDefault(_planeShaders9);
+
+var _planeShaders11 = __webpack_require__(12);
+
+var _planeShaders12 = _interopRequireDefault(_planeShaders11);
+
+var _planeShaders13 = __webpack_require__(13);
+
+var _planeShaders14 = _interopRequireDefault(_planeShaders13);
+
+var _planeShaders15 = __webpack_require__(14);
+
+var _planeShaders16 = _interopRequireDefault(_planeShaders15);
+
+var _planeShaders17 = __webpack_require__(15);
+
+var _planeShaders18 = _interopRequireDefault(_planeShaders17);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var THREE = __webpack_require__(4);
+
+
+var scene = void 0;
+var camera = void 0;
+var positions = void 0;
+var intersected = void 0;
+var lastPos = new THREE.Vector3(0, 0, 0);
+var singleOpen = false;
+
+var shaders = [_planeShaders2.default, _planeShaders4.default, _planeShaders6.default, _planeShaders8.default, _planeShaders10.default, _planeShaders12.default, _planeShaders14.default, _planeShaders16.default, _planeShaders18.default];
+var planes = [];
+var raycaster = new THREE.Raycaster();
+var mouse = new THREE.Vector2();
+
+var openVideo = function openVideo(e) {
+    e.preventDefault();
+    if (e.target.nodeName === 'BUTTON') return;
+    if (singleOpen === false) {
+        mouse.x = e.clientX / window.innerWidth * 2 - 1;
+        mouse.y = -(e.clientY / (window.innerHeight - 76)) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        var intersects = raycaster.intersectObjects(scene.children);
+        if (intersects.length > 0) {
+            intersected = intersects[0].object;
+            lastPos.copy(intersected.position);
+            var _camera$position = camera.position,
+                x = _camera$position.x,
+                y = _camera$position.y,
+                z = _camera$position.z;
+
+            _gsap2.default.to(intersected.position, 0.25, {
+                x: x, y: y, z: z - 30.5, ease: Power3.easeOut
+            });
+            _gsap2.default.to('#close-video', 0.25, {
+                y: '0px'
+            });
+            singleOpen = true;
+        }
+    }
+};
+
+var closeVideo = function closeVideo(e) {
+    var x = lastPos.x,
+        y = lastPos.y,
+        z = lastPos.z;
+
+    if (singleOpen === true) {
+        _gsap2.default.to(intersected.position, 0.25, {
+            x: x, y: y, z: z
+        });
+        _gsap2.default.to('#close-video', 0.25, {
+            y: '-150px'
+        });
+        singleOpen = false;
+    }
+};
+
+var init = function init(scene3d, camera3d, width, height, texture) {
+    scene = scene3d;
+    camera = camera3d;
+    positions = [new THREE.Vector3(-width / 3, height / 3, 0), new THREE.Vector3(0, height / 3, 0), new THREE.Vector3(width / 3, height / 3, 0), new THREE.Vector3(-width / 3, 0, 0), new THREE.Vector3(0, 0, 0), new THREE.Vector3(width / 3, 0, 0), new THREE.Vector3(-width / 3, -height / 3, 0), new THREE.Vector3(0, -height / 3, 0), new THREE.Vector3(width / 3, -height / 3, 0)];
+
+    for (var i = 0; i < shaders.length; i += 1) {
+        var plane = new _plane2.default('Lorem Ipsum', shaders[i].vertShader, shaders[i].fragShader, positions[i], {
+            width: width / 3,
+            height: height / 3
+        }).init(scene, new THREE.Texture(texture.canvas));
+        planes.push(plane);
+    }
+
+    window.addEventListener('mousedown', openVideo, false);
+    document.querySelector('#close-video').addEventListener('mousedown', closeVideo, false);
+};
+
+var updateFrame = function updateFrame(ts) {
+    planes.forEach(function (plane, i) {
+        plane.updateFrame(ts);
+    });
+};
+
+exports.default = {
+    init: init,
+    updateFrame: updateFrame
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+if (navigator.getUserMedia) {
+    navigator.getUserMedia({ audio: false, video: { width: 320, height: 240 } }, function (stream) {
+        var video = document.querySelector('#video');
+        video.srcObject = stream;
+        video.onloadedmetadata = function (e) {
+            video.play();
+        };
+    }, function (err) {
+        console.log("The following error occurred: " + err.name);
+    });
+} else {
+    console.log("getUserMedia not supported");
+}
+
+/***/ }),
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43366,235 +43648,22 @@ function CanvasRenderer() {
 
 
 /***/ }),
-/* 1 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+var _scene = __webpack_require__(0);
 
-var _planeContainer = __webpack_require__(3);
-
-var _planeContainer2 = _interopRequireDefault(_planeContainer);
-
-var _cameraTexture = __webpack_require__(2);
-
-var _cameraTexture2 = _interopRequireDefault(_cameraTexture);
+var _scene2 = _interopRequireDefault(_scene);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var THREE = __webpack_require__(0);
-
-
-var width = window.innerWidth;
-var height = window.innerHeight - 72;
-
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-var renderer = new THREE.WebGLRenderer();
-
-var texture = new _cameraTexture2.default();
-_planeContainer2.default.init(scene, camera, width / 12, height / 12, texture);
-
-var setScene = function setScene() {
-    camera.position.set(0, 0, 92);
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
-    renderer.setSize(width, height);
-    renderer.setClearColor(0x111111);
-    document.body.querySelector('#canvas-container').appendChild(renderer.domElement);
-};
-
-var renderFrame = function renderFrame(ts) {
-    window.requestAnimationFrame(renderFrame);
-    renderer.render(scene, camera);
-    texture.render();
-    camera.lookAt(scene.position);
-    camera.updateMatrixWorld();
-    _planeContainer2.default.updateFrame(ts);
-};
-
-var init = function init() {
-    setScene();
-    renderFrame();
-};
-
-exports.default = {
-    init: init
-};
+_scene2.default.init();
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-__webpack_require__(14);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Texture = function () {
-    function Texture() {
-        _classCallCheck(this, Texture);
-
-        this.canvas = document.createElement('canvas');
-        this.ctx = this.canvas.getContext('2d');
-        this.width = this.canvas.width = 512;
-        this.height = this.canvas.height = 256;
-        this.src = document.querySelector('#video');
-
-        //document.body.appendChild(this.canvas)
-    }
-
-    _createClass(Texture, [{
-        key: 'render',
-        value: function render() {
-            this.ctx.save();
-            this.ctx.drawImage(this.src, 0, 0, this.width, this.height);
-            var imageData = this.ctx.getImageData(0, 0, this.width, this.height);
-            for (var i = 0; i < imageData.data.length; i += 4) {
-                //let r = imageData.data[i]
-                //let g = imageData.data[i + 1]
-                //let b = imageData.data[i + 2]
-                //let brightness = (3*r+4*g+b)>>>3
-                //imageData.data[i]     = brightness
-                //imageData.data[i + 1] = brightness
-                //imageData.data[i + 2] = brightness
-            }
-            this.ctx.putImageData(imageData, 0, 0);
-            this.ctx.restore();
-        }
-    }]);
-
-    return Texture;
-}();
-
-exports.default = Texture;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _plane = __webpack_require__(4);
-
-var _plane2 = _interopRequireDefault(_plane);
-
-var _gsap = __webpack_require__(15);
-
-var _gsap2 = _interopRequireDefault(_gsap);
-
-var _planeShaders = __webpack_require__(5);
-
-var _planeShaders2 = _interopRequireDefault(_planeShaders);
-
-var _planeShaders3 = __webpack_require__(6);
-
-var _planeShaders4 = _interopRequireDefault(_planeShaders3);
-
-var _planeShaders5 = __webpack_require__(7);
-
-var _planeShaders6 = _interopRequireDefault(_planeShaders5);
-
-var _planeShaders7 = __webpack_require__(8);
-
-var _planeShaders8 = _interopRequireDefault(_planeShaders7);
-
-var _planeShaders9 = __webpack_require__(9);
-
-var _planeShaders10 = _interopRequireDefault(_planeShaders9);
-
-var _planeShaders11 = __webpack_require__(10);
-
-var _planeShaders12 = _interopRequireDefault(_planeShaders11);
-
-var _planeShaders13 = __webpack_require__(11);
-
-var _planeShaders14 = _interopRequireDefault(_planeShaders13);
-
-var _planeShaders15 = __webpack_require__(12);
-
-var _planeShaders16 = _interopRequireDefault(_planeShaders15);
-
-var _planeShaders17 = __webpack_require__(13);
-
-var _planeShaders18 = _interopRequireDefault(_planeShaders17);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var THREE = __webpack_require__(0);
-
-
-var shaders = [_planeShaders2.default, _planeShaders4.default, _planeShaders6.default, _planeShaders8.default, _planeShaders10.default, _planeShaders12.default, _planeShaders14.default, _planeShaders16.default, _planeShaders18.default];
-var planes = [];
-var raycaster = new THREE.Raycaster();
-var mouse = new THREE.Vector2();
-
-var init = function init(scene, camera, width, height, texture) {
-    scene = scene;
-    camera = camera;
-
-    var positions = [new THREE.Vector3(-width / 3, height / 3, 0), new THREE.Vector3(0, height / 3, 0), new THREE.Vector3(width / 3, height / 3, 0), new THREE.Vector3(-width / 3, 0, 0), new THREE.Vector3(0, 0, 0), new THREE.Vector3(width / 3, 0, 0), new THREE.Vector3(-width / 3, -height / 3, 0), new THREE.Vector3(0, -height / 3, 0), new THREE.Vector3(width / 3, -height / 3, 0)];
-
-    for (var i = 0; i < shaders.length; i += 1) {
-        planes.push(new _plane2.default('Lorem Ipsum', shaders[i].vertShader, shaders[i].fragShader, positions[i], {
-            width: width / 3,
-            height: height / 3
-        }).init(scene, new THREE.Texture(texture.canvas)));
-    }
-
-    var mouseDown = function mouseDown(e) {
-        e.preventDefault();
-        mouse.x = e.clientX / window.innerWidth * 2 - 1;
-        mouse.y = -(e.clientY / (window.innerHeight - 76)) * 2 + 1;
-
-        raycaster.setFromCamera(mouse, camera);
-        var intersects = raycaster.intersectObjects(scene.children);
-        var intersected = void 0;
-        if (intersects.length > 0) {
-            intersected = intersects[0].object;
-            var _camera$position = camera.position,
-                x = _camera$position.x,
-                y = _camera$position.y,
-                z = _camera$position.z;
-
-            _gsap2.default.to(intersected.position, 0.25, {
-                x: x, y: y, z: z - 30.5, ease: Power3.easeOut
-            });
-        }
-    };
-
-    window.addEventListener('mousedown', mouseDown, false);
-};
-
-var updateFrame = function updateFrame(ts) {
-    planes.forEach(function (plane, i) {
-        plane.updateFrame(ts);
-    });
-};
-
-exports.default = {
-    init: init,
-    updateFrame: updateFrame
-};
-
-/***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43608,7 +43677,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var THREE = __webpack_require__(0);
+var THREE = __webpack_require__(4);
 
 var Plane = function () {
     function Plane(title, vertShader, fragShader, pos, size) {
@@ -43619,6 +43688,7 @@ var Plane = function () {
         this.fragShader = fragShader;
         this.position = pos;
         this.size = size;
+        this.scale = { x: 1, y: 1, z: 1 };
         this.mesh = null;
     }
 
@@ -43632,7 +43702,8 @@ var Plane = function () {
                     texture: { type: 't', value: texture }
                 },
                 vertexShader: this.vertShader,
-                fragmentShader: this.fragShader
+                fragmentShader: this.fragShader,
+                transparent: true
             });
             this.mesh = new THREE.Mesh(geometry, material);
             var _position = this.position,
@@ -43641,6 +43712,7 @@ var Plane = function () {
                 z = _position.z;
 
             this.mesh.position.set(x, y, z);
+            this.mesh.scale.set(this.scale.x, this.scale.y, this.scale.z);
             scene.add(this.mesh);
 
             return this;
@@ -43648,7 +43720,7 @@ var Plane = function () {
     }, {
         key: 'updateFrame',
         value: function updateFrame(ts) {
-
+            this.mesh.scale.set(this.scale.x, this.scale.y, this.scale.z);
             this.mesh.material.uniforms.delta.value = ts;
             this.mesh.material.uniforms.texture.value.needsUpdate = true;
         }
@@ -43660,7 +43732,7 @@ var Plane = function () {
 exports.default = Plane;
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43679,7 +43751,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43698,7 +43770,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43717,7 +43789,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43736,7 +43808,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43755,7 +43827,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43774,7 +43846,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43793,7 +43865,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43812,7 +43884,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43831,30 +43903,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
-if (navigator.getUserMedia) {
-    navigator.getUserMedia({ audio: false, video: { width: 320, height: 240 } }, function (stream) {
-        var video = document.querySelector('#video');
-        video.srcObject = stream;
-        video.onloadedmetadata = function (e) {
-            video.play();
-        };
-    }, function (err) {
-        console.log("The following error occurred: " + err.name);
-    });
-} else {
-    console.log("getUserMedia not supported");
-}
-
-/***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -49900,7 +49949,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 						if (global) {
 							_globals[n] = _exports[n] = cl; //provides a way to avoid global namespace pollution. By default, the main classes like TweenLite, Power1, Strong, etc. are added to window unless a GreenSockGlobals is defined. So if you want to have things added to a custom object instead, just do something like window.GreenSockGlobals = {} before loading any GreenSock files. You can even set up an alias like window.GreenSockGlobals = windows.gs = {} so that you can access everything like gs.TweenLite. Also remember that ALL classes are added to the window.com.greensock object (in their respective packages, like com.greensock.easing.Power1, com.greensock.TweenLite, etc.)
 							hasModule = (typeof(module) !== "undefined" && module.exports);
-							if (!hasModule && "function" === "function" && __webpack_require__(16)){ //AMD
+							if (!hasModule && "function" === "function" && __webpack_require__(17)){ //AMD
 								!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() { return cl; }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 							} else if (hasModule){ //node
@@ -51715,10 +51764,10 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		_tickerActive = false; //ensures that the first official animation forces a ticker.tick() to update the time when it is instantiated
 
 })((typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window, "TweenMax");
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -51727,7 +51776,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 var g;
@@ -51752,21 +51801,6 @@ try {
 
 module.exports = g;
 
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _scene = __webpack_require__(1);
-
-var _scene2 = _interopRequireDefault(_scene);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_scene2.default.init();
 
 /***/ })
 /******/ ]);
