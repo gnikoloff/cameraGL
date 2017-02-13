@@ -1,0 +1,61 @@
+* { margin: 0; padding: 0; }
+canvas { display: block; }
+body { overflow: hidden; background: #111; color: #fff; font-family: “Century Gothic”, CenturyGothic, AppleGothic, sans-serif; }
+header {
+    display: flex;
+    height: 76px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+
+    transform: translate3d(0, 78px, 0);
+}
+a { color: #fff; }
+#close-video {
+    position: fixed;
+    top: 62px;
+    left: 50%;
+    margin-left: -36px;
+    width: 62px;
+    height: 62px;
+    border: none;
+    cursor: pointer;
+    background-color: #222;
+    background-image: url('close-btn.png');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+
+    transform: translate3d(0, -150px, 0);
+}
+#video { display: none; }
+#loaded {
+    display: none;
+}
+#loading { 
+    width: 100vw; 
+    height: 100vh; 
+    position: relative;
+}
+#load-icon {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -25px 0 0 -25px;
+    background-image: url('page-loader.png');
+    background-repeat:  no-repeat;
+    background-position: 50% 50%;
+
+    transform-origin: 50% 50%;
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg); 
+    }
+    100% {
+        transform: rotate(360deg)
+            }
+        }

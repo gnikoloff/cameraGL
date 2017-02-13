@@ -1,3 +1,6 @@
+import TweenMax from 'gsap'
+import Events from 'backbone-events-standalone'
+
 navigator.getUserMedia = navigator.getUserMedia ||
                     navigator.webkitGetUserMedia ||
                     navigator.mozGetUserMedia;
@@ -9,6 +12,7 @@ if (navigator.getUserMedia) {
         video.srcObject = stream;
         video.onloadedmetadata = function(e) {
             video.play();
+            Events.trigger('video-access-granted')
         };
     },
     (err) => {

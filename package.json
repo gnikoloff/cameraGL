@@ -16,6 +16,7 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
+    "backbone-events-standalone": "^0.2.7",
     "gsap": "^1.19.1",
     "three": "^0.84.0"
   }
