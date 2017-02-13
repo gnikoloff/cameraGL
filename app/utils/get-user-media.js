@@ -1,10 +1,6 @@
 import getUserMedia from 'getusermedia'
 import Events from 'backbone-events-standalone'
 
-navigator.getUserMedia = navigator.getUserMedia ||
-                    navigator.webkitGetUserMedia ||
-                    navigator.mozGetUserMedia;
-
 if (navigator.getUserMedia) {
     getUserMedia({ audio: false, video: true },
     (err, stream) => {
