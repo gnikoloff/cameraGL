@@ -1,0 +1,41 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>CameraGL</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <style>
+            * { margin: 0; padding: 0; }
+            canvas { display: block; }
+            #video { display: none; }
+            body { overflow: hidden; background: #111; color: #fff; font-family: “Century Gothic”, CenturyGothic, AppleGothic, sans-serif; }
+            header {
+                display: flex;
+                height: 76px;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 12px;
+            }
+            a { color: #fff; }
+        </style>
+
+    </head>
+    <body>
+
+        <div id="app-container">
+            <video id="video"></video>
+            <div id="canvas-container"></div>
+            <header>
+                <h1>CameraGL</h1>
+                <div>Exercise in WebGL by <a href="http://gnikoloff.com" target="_blank">Georgi Nikoloff</a></div>
+            </header>
+        </div>
+
+        <script src="public/bundle.js"></script>
+
+    </body>
+</html>
